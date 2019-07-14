@@ -1,0 +1,21 @@
+
+DEBUG: True
+SECRET_KEY: '#k7c!n----@n6y---&$----ou4)6p'
+ALLOWED_HOSTS: ['*']
+
+DATABASE:
+  NAME: ''
+  USER: ''
+  PASSWORD: ''
+  HOST: 'localhost'
+  PORT: ''
+
+VK_APP:
+  ID: ''
+  SECRET: ''
+  SERVICE: ''
+
+VK_ROOT:
+  ID: ''
+  VERSION: '5.84'
+  SCOPE: 'wall,friends,photos,video,docs,notes,pages,status,groups,notifications,offline'

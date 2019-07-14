@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block navigationul %}
+  <ul class="navigation">
+     <li><a class="" target="_blank" href="https://vk.com/id10607730">Контакты</a></li>
+  </ul>
+{% endblock %}
+
+{%block page %}
+<div id="js-pjax-container">
+      
+<div class="welcome" >
+
+  <section class="section section--hero">
+  <div class="wrapper" style="padding-top: 150px;">
+
+    <header class="hero-header">
+      <div class="hero-header-item hero-logo" aria-hidden="true">
+        <div class="hero-logo-circles">
+          <img class="hero-logo-circle" src="/static/index-portal-red-semi-206422653d447e981744a5f5865e8225.svg" alt="Index portal red semi" />
+          <img class="hero-logo-circle" src="/static/index-portal-red-9bff954009d893312ac619e31af14ae1.svg" alt="Index portal red" />
+          <img class="hero-logo-circle" src="/static/index-portal-orange-semi-c671a2be2b56754be0c2fdf64244b1bb.svg" alt="Index portal orange semi" />
+          <img class="hero-logo-circle" src="/static/index-portal-orange-4ba73231728c110e0fe16aba5194e92b.svg" alt="Index portal orange" />
+          <img class="hero-logo-circle" src="/static/index-portal-yellow-semi-93c8853cbd3ebf297aead4efaf5a6ca3.svg" alt="Index portal yellow semi" />
+          <img class="hero-logo-circle" src="/static/index-portal-yellow-1a0199e2dd6d8df832c4bbbda2b0392b.svg" alt="Index portal yellow" />
+          <img class="hero-logo-circle" src="/static/index-portal-green-semi-dbb1db021647238b23d575ba492441e6.svg" alt="Index portal green semi" />
+          <img class="hero-logo-circle" src="/static/index-portal-green-2c971eb899d32fa7bdb26fac8b1bedd7.svg" alt="Index portal green" />
+          <img class="hero-logo-circle" src="/static/index-portal-blue-semi-c37d271ed0200999eed96db9a3d9ebef.svg" alt="Index portal blue semi" />
+          <img class="hero-logo-circle" src="/static/index-portal-blue-c2e705932469b61cbb9ceb0b6b778e35.svg" alt="Index portal blue" />
+          <img  src={{photo_link}} alt="Avatar" style="border-radius: 200px; position: absolute; left: 83px; top: 83px; box-shadow: 1px 3px 25px #ea2248;"/>
+        </div>
+      </div>
+      <ul class="hero-header-item hero-download">
+          <li>
+            <a href="/stats/get/" class="welcome-button js-download-button"> <span class="octicon octicon-move-down"></span>Узнать</a>
+          </li>
+      </ul>
+    </header>
+
+      <div class="hero-features">
+        <h1 class="hero-tagline">{{first_name}}, нажми <span class="hero-tagline-highlight">кнопку Узнать</span>, чтобы собрать <span class="hero-tagline-highlight">статистику</span> по количеству записей на стене, отметок "Мне нравится" и прочему в твоем VK</h1>
+      </div>
+
+      <img style="height: 200px; width: 200px;" class="hero-octonaut" src="/static/logo.png" alt="Index octonaut" />
+      </div>
+    </section>
+
+
+  <section id="teletype" class="section section--realtime" style="background-image: url(/static/bg_token.svg); overflow: none;">
+    <div class="wrapper" style="padding-top: none; padding-bottom: 150px; "></div>
+  </section>
+
+    </div>
+  </div>
+
+{% endblock %}

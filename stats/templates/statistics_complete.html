@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+
+{% block navigationul %}
+  <ul class="navigation">
+    <li><a class="" href="#teletype">О токене</a></li>
+    <li><a class="" target="_blank" href="https://vk.com/id10607730">Контакты</a></li>
+  </ul>
+{% endblock %}
+
+{%block page %}
+<div id="js-pjax-container">
+
+    <div class="welcome">
+
+  <section class="section section--hero">
+  <div class="wrapper">
+
+    <header class="hero-header">
+      <div class="hero-header-item hero-logo" aria-hidden="true">
+        <div class="hero-logo-circles">
+            <img class="hero-logo-circle" src="/static/index-portal-red-semi-206422653d447e981744a5f5865e8225.svg" alt="Index portal red semi" />
+            <img class="hero-logo-circle" src="/static/index-portal-red-9bff954009d893312ac619e31af14ae1.svg" alt="Index portal red" />
+            <img class="hero-logo-circle" src="/static/index-portal-orange-semi-c671a2be2b56754be0c2fdf64244b1bb.svg" alt="Index portal orange semi" />
+            <img class="hero-logo-circle" src="/static/index-portal-orange-4ba73231728c110e0fe16aba5194e92b.svg" alt="Index portal orange" />
+            <img class="hero-logo-circle" src="/static/index-portal-yellow-semi-93c8853cbd3ebf297aead4efaf5a6ca3.svg" alt="Index portal yellow semi" />
+            <img class="hero-logo-circle" src="/static/index-portal-yellow-1a0199e2dd6d8df832c4bbbda2b0392b.svg" alt="Index portal yellow" />
+            <img class="hero-logo-circle" src="/static/index-portal-green-semi-dbb1db021647238b23d575ba492441e6.svg" alt="Index portal green semi" />
+            <img class="hero-logo-circle" src="/static/index-portal-green-2c971eb899d32fa7bdb26fac8b1bedd7.svg" alt="Index portal green" />
+            <img class="hero-logo-circle" src="/static/index-portal-blue-semi-c37d271ed0200999eed96db9a3d9ebef.svg" alt="Index portal blue semi" />
+            <img class="hero-logo-circle" src="/static/index-portal-blue-c2e705932469b61cbb9ceb0b6b778e35.svg" alt="Index portal blue" />
+            <img  src={{photo_link}} alt="Avatar" style="border-radius: 200px; position: absolute; left: 83px; top: 83px; box-shadow: 1px 3px 25px #ea2248;"/>
+        </div>
+      </div>
+      <ul class="hero-header-item hero-download">
+
+          <li>
+            <span class="version">Документы</span>
+            <span class="support">{{count_of_documents}}</span>
+              {% if count_of_documents == 'Недоступно!' or count_of_documents == 0 %}
+                    <div class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+              {% else %}
+                  <div class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6;" onclick="clearData('docs')">Очистить</div>
+              {% endif %}
+          </li>
+          <li>
+            <span class="version">Посты на стене</span>
+            <span class="support">{{count_of_posts}}</span>
+               {% if count_of_posts == 'Недоступно!' or count_of_posts == 0  %}
+                    <div class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+              {% else %}
+                  <div class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" onclick="clearData('wall')">Очистить</div>
+              {% endif %}
+          </li>
+          <li>
+            <span class="version">Видео</span>
+            <span class="support">{{count_of_videos}}</span>
+               {% if count_of_videos == 'Недоступно!' or count_of_videos == 0  %}
+                    <div class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+              {% else %}
+                  <div class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" onclick="clearData('videos')">Очистить</div>
+              {% endif %}
+          </li>
+          <!--ВК закрыло доступ к сообщениям-->
+          <!--<li>-->
+            <!--<span class="version">Диалоги</span>-->
+            <!--<span class="support">{{count_of_dialogs}}</span>-->
+               <!--{% if count_of_dialogs != 'пока Недоступно!' or count_of_dialogs == 0  %}-->
+                    <!--<div class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">В разработке...</div>-->
+              <!--{% else %}-->
+                  <!--<div class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" onclick="clearData('dialogs')">Очистить</div>-->
+              <!--{% endif %}-->
+          <!--</li>-->
+          <li>
+            <span class="version">Понравилось видео</span>
+            <span class="support">{{count_of_videos_likes}}</span>
+               {% if count_of_videos_likes == 'Недоступно!' or count_of_videos_likes == 0  %}
+                    <div class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+              {% else %}
+                  <div class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" onclick="clearData('likes_video')">Очистить</div>
+              {% endif %}
+          </li>
+          <li>
+            <span class="version">Понравилось фото</span>
+            <span class="support">{{count_of_photos_likes}}</span>
+               {% if count_of_photos_likes == 'Недоступно!' or count_of_photos_likes == 0  %}
+                    <div class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+              {% else %}
+                  <div class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" onclick="clearData('likes_photo')">Очистить</div>
+              {% endif %}
+          </li>
+          <li>
+            <span class="version">Понравилось постов</span>
+            <span class="support">{{count_of_posts_likes}}</span>
+               {% if count_of_posts_likes == 'Недоступно!' or count_of_posts_likes == 0  %}
+                    <div class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+              {% else %}
+                  <div class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" onclick="clearData('likes_post')">Очистить</div>
+              {% endif %}
+          </li>
+          <li>
+            <a href="/stats/get/" class="welcome-button js-download-button"> <span class="octicon octicon-move-down"></span>Обновить</a>
+          </li>
+      </ul>
+    </header>
+
+        <!--Статус задачи-->
+        <div id="task_state" style="color: red; font-size: larger; margin-top: 10px;"></div>
+
+      <div class="hero-features">
+        <h1 class="hero-tagline">Нажми <span class="hero-tagline-highlight">кнопку очистить</span>, чтобы удалить записи соответсвующего раздела в твоем VK</h1>
+      </div>
+      {% if count_of_posts_likes == 'Недоступно!' or  count_of_documents == 'Недоступно!' or count_of_photos_likes == 'Недоступно!' or count_of_videos_likes == 'Недоступно!' or count_of_videos == 'Недоступно!' or count_of_posts == 'Недоступно!' %}
+          <div class="hero-features">
+            <h1 class="hero-tagline">Почему я вижу <span class="hero-tagline-highlight">надпись "Недоступно"</span>? Необходимо прочитать о токене.</h1>
+          </div>
+      {% else %}
+      {% endif %}
+
+      <img style="height: 200px; width: 200px;" class="hero-octonaut" src="/static/logo.png" alt="Index octonaut" />
+      </div>
+    </section>
+
+    <section id="teletype" class="section section--realtime" style="background-image: url(/static/bg_token.svg); overflow: none; padding-top: 100px">
+  <div class="wrapper">
+
+    <h3>О токене</h3>
+
+    <p>Для доступа к данным пользователя VK выдает приложениям специальный токен, в целях безопасности, дающий разрешение только на некоторые операции с аккаунтом. В основном это публично доступные разделы.</p>
+
+    <div class="welcome-bgs">
+      <img class="welcome-bg welcome-bg--screenshot" src="/static/picture.jpg" alt="instruction" />
+    </div>
+
+    <p>К сожалению, стандартных прав не хватит, чтобы собрать полную статистику отметок "Мне нравится" или удалить что-либо на стороне аккаунта. Если Вы доверяете приложению и хотите получить от него максимум - передайте ему расширенный токен.</p>
+    <p>Для своего успокоения, после работы с сервисом Вы можете сменить пароль от аккаунта и выданный токен станет неактуальным.</p>
+
+    <p class="welcome-cta">
+      <a href="{{root_app_href}}" target="_blank" class="welcome-button">Расширить права</a>
+    </p>
+
+    <div style="display: inline">
+
+        <p >Вставить токен сюда</p>
+
+        <div id="welcome">
+            <input type="text" id="name" placeholder="Токен...">
+            <div style="padding: 10px;"></div>
+            <div style="cursor: pointer;" class="welcome-button" onclick="sendData()">Отправить</div>
+
+            <div id="state" style="color: #3b9b6d; margin-top: 15px; font-size: 25px;"></div>
+        </div>
+    </div>
+  </div>
+</section>
+
+    </div>
+</div>
+    <script>
+    function sendData() {
+      var token = document.getElementById('name').value;
+
+      var params = new FormData();
+      params.append("token", token);
+
+      var request = new XMLHttpRequest();
+      request.open("POST", "../send_token/", true);
+
+      request.addEventListener(
+            'readystatechange',
+            function() {
+                  // если статус запроса 200 (OK)
+                  if (request.status==200) {
+                    var state = document.getElementById('state');
+                    state.innerHTML = "Успешно!!!";
+                  }
+                  else {
+                        var state = document.getElementById('state');
+                        state.innerHTML = "Не удалось!!!";
+                  }
+            }
+      );
+      request.send(params);
+      };
+
+    function clearData(kind) {
+      var params = new FormData();
+      params.append("kind", kind);
+
+      var request = new XMLHttpRequest();
+      request.open("POST", "../clear/", true);
+
+       request.addEventListener(
+            'readystatechange',
+            function() {
+                  // если статус запроса 200 (OK)
+                  if (request.status==200) {
+                    var state = document.getElementById('task_state');
+                    state.innerHTML = "Задача в работе!";
+                  }
+                  else {
+                        var state = document.getElementById('task_state');
+                        state.innerHTML = "Нельзя поставить задачу, пока выполняется другая. Попробуй позже!";
+                  }
+            }
+      );
+
+      request.send(params);
+    };
+
+    </script>
+{% endblock %}

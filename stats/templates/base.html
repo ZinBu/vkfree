@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<style type="text/css">
+            .bgimg {
+                background-image: url(/static/trash.svg);
+                background-repeat: no-repeat;
+            }
+</style>
+<head>
+  <meta charset="UTF-8">
+  <title>VK Free</title>
+  <link rel="stylesheet" media="all" href="/static/style.css" data-turbolinks-track="true"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/static/favicon.ico"/>
+</head>
+
+<body class="is-responsive">
+    <div class="footer-push">
+        <nav class="top-bar" aria-label="Primary">
+        <div class="wrapper no-pad">
+
+        {% block navigationul %}
+        {% endblock %}
+        <div class="top-bar-right">
+            <a href="/logout/">
+                  <span class="octicon octicon-log-in"></span> Выйти
+                </a>
+            </div>
+          </div>
+         </nav>
+
+        {% block page %}
+        {% endblock %}
+
+    </div>
+</body>
+
+<footer>
+  <div class="footer">
+    <div class="wrapper no-pad">
+      <ul class="footer-left">
+         <li><a href="https://vk.com/id10607730" target="_blank">Контакты</a></li>
+      </ul>
+
+      <div class="footer-right">
+        <a>with <span class="octicon octicon-heart"></span> by <span style="font-weight: 900;"> R</span></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</html>
