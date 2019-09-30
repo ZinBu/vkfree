@@ -1,14 +1,15 @@
 
 DEBUG: False
-SECRET_KEY: '#k7c!n----@n6y---&$----ou4)6p'
-ALLOWED_HOSTS: ['localhost', '127.0.0.1']
+APP_BASE_URL: ''
+SECRET_KEY: ''
+ALLOWED_HOSTS: ['*']
 
 DATABASE:
-  NAME: ''
-  USER: ''
+  NAME: 'postgres'
+  USER: 'postgres'
   PASSWORD: ''
-  HOST: 'localhost'
-  PORT: ''
+  HOST: 'db'
+  PORT: 5432
 
 VK_APP:
   ID: ''

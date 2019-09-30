@@ -1,2 +1,5 @@
+/backend/staticfiles/
+/temp/
+/logs/
+/backend/stats/migrations/
 .idea
-__pycache__

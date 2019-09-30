@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<style type="text/css">
+            .bgimg {
+                background-image: url(/static/trash.svg);
+                background-repeat: no-repeat;
+            }
+</style>
+<head>
+  <meta charset="UTF-8">
+  <title>VK Free</title>
+  <link rel="stylesheet" media="all" href="/static/style.css" data-turbolinks-track="true"/>
+  <link rel="stylesheet" media="all" href="/static/loader.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/static/favicon.ico"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+
+<body class="is-responsive">
+    <div id="app">
+
+        <div class="footer-push">
+            <nav class="top-bar" aria-label="Primary">
+            <div class="wrapper no-pad">
+             <ul class="navigation">
+                 <li><a class="" target="_blank" href="https://vk.com/id10607730">Контакты</a></li>
+              </ul>
+            <div class="top-bar-right">
+                <a v-on:click="logout" v-if="user_is_login" style="cursor: pointer;">
+                      <span class="octicon octicon-log-in"></span> Выйти
+                </a>
+                </div>
+              </div>
+             </nav>
+
+            <div id="js-pjax-container">
+
+        <div class="welcome" v-bind:style="welcome_style">
+
+        <!--Блок входа  (когда юзер не залогинен)   -->
+            <div v-if="!user_is_login" >
+                <div style="">
+                  <a v-if="display_entry_button && !init_auth" v-on:click="login" class="welcome-button" style="padding: 1em 4em; cursor: pointer;">Войти</a>
+                  <a v-else-if="display_entry_button && init_auth" class="welcome-button" style="padding: 1em 4em;">Войти</a>
+                </div>
+                <div class="hero-features">
+                    <h1 class="hero-tagline">Нужно <span class="hero-tagline-highlight"> войти через VK</span> чтобы воспользоваться сайтом</h1>
+                </div>
+
+            </div>
+            <div v-if="init_auth">
+                <temp-loader></temp-loader>
+                <div style="margin: 15px;"></div>
+            </div>
+
+          <section class="section section--hero">
+          <div class="wrapper" style="padding-top: 150px;">
+
+            <header class="hero-header">
+              <div class="hero-header-item hero-logo" aria-hidden="true">
+                <div class="hero-logo-circles" v-if="user_is_login">
+                  <img class="hero-logo-circle" src="/static/index-portal-red-semi-206422653d447e981744a5f5865e8225.svg" alt="Index portal red semi" />
+                  <img class="hero-logo-circle" src="/static/index-portal-red-9bff954009d893312ac619e31af14ae1.svg" alt="Index portal red" />
+                  <img class="hero-logo-circle" src="/static/index-portal-orange-semi-c671a2be2b56754be0c2fdf64244b1bb.svg" alt="Index portal orange semi" />
+                  <img class="hero-logo-circle" src="/static/index-portal-orange-4ba73231728c110e0fe16aba5194e92b.svg" alt="Index portal orange" />
+                  <img class="hero-logo-circle" src="/static/index-portal-yellow-semi-93c8853cbd3ebf297aead4efaf5a6ca3.svg" alt="Index portal yellow semi" />
+                  <img class="hero-logo-circle" src="/static/index-portal-yellow-1a0199e2dd6d8df832c4bbbda2b0392b.svg" alt="Index portal yellow" />
+                  <img class="hero-logo-circle" src="/static/index-portal-green-semi-dbb1db021647238b23d575ba492441e6.svg" alt="Index portal green semi" />
+                  <img class="hero-logo-circle" src="/static/index-portal-green-2c971eb899d32fa7bdb26fac8b1bedd7.svg" alt="Index portal green" />
+                  <img class="hero-logo-circle" src="/static/index-portal-blue-semi-c37d271ed0200999eed96db9a3d9ebef.svg" alt="Index portal blue semi" />
+                  <img class="hero-logo-circle" src="/static/index-portal-blue-c2e705932469b61cbb9ceb0b6b778e35.svg" alt="Index portal blue" />
+                  <img  v-bind:src="photo_link"  v-if="user_is_login" alt="Avatar" style="border-radius: 200px; position: absolute; left: 83px; top: 83px; box-shadow: 1px 3px 25px #ea2248;"/>
+                </div>
+                  <div v-if="wip">
+                       <temp-loader></temp-loader>
+                   </div>
+              </div>
+
+              <ul class="hero-header-item hero-download" v-if="user_is_login && user_stats === null">
+                  <li>
+                    <a v-if="!wip" v-on:click="requestStatistic" style="cursor: pointer;" class="welcome-button js-download-button"> <span class="octicon octicon-move-down"></span>Узнать</a>
+                    <a v-else class="welcome-button js-download-button"> <span class="octicon octicon-move-down"></span>Узнать</a>
+                  </li>
+              </ul>
+             <ul class="hero-header-item hero-download" v-if="user_is_login && user_stats !== null">
+
+                  <li>
+                    <span class="version">Документы</span>
+                    <span class="support">{{user_stats.count_of_documents}}</span>
+                    <div v-if="isDisabled('count_of_documents')" class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+                    <div v-else class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6;" v-on:click="clearData('docs')">Очистить</div>
+                  </li>
+                  <li>
+                    <span class="version">Посты на стене</span>
+                    <span class="support">{{user_stats.count_of_posts}}</span>
+                    <div v-if="isDisabled('count_of_posts')" class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+                    <div v-else class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" v-on:click="clearData('wall')">Очистить</div>
+                  </li>
+                  <li>
+                    <span class="version">Видео</span>
+                    <span class="support">{{user_stats.count_of_videos}}</span>
+                      <div v-if="isDisabled('count_of_videos')" class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+                      <div v-else class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" v-on:click="clearData('videos')">Очистить</div>
+                  </li>
+                  <!--ВК закрыло доступ к сообщениям-->
+                  <!--<li>-->
+                    <!--<span class="version">Диалоги</span>-->
+                    <!--<span class="support">{{count_of_dialogs}}</span>-->
+                       <!--{% if count_of_dialogs != 'пока Недоступно!' or count_of_dialogs == 0  %}-->
+                            <!--<div class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">В разработке...</div>-->
+                      <!--{% else %}-->
+                          <!--<div class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" onclick="clearData('dialogs')">Очистить</div>-->
+                      <!--{% endif %}-->
+                  <!--</li>-->
+                  <li>
+                    <span class="version">Понравилось видео</span>
+                    <span class="support">{{user_stats.count_of_videos_likes}}</span>
+                            <div v-if="isDisabled('count_of_videos_likes')" class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+                          <div v-else class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" v-on:click="clearData('likes_video')">Очистить</div>
+                  </li>
+                  <li>
+                    <span class="version">Понравилось фото</span>
+                    <span class="support">{{user_stats.count_of_photos_likes}}</span>
+                            <div v-if="isDisabled('count_of_photos_likes')" class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+                          <div v-else class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" v-on:click="clearData('likes_photo')">Очистить</div>
+                  </li>
+                  <li>
+                    <span class="version">Понравилось постов</span>
+                    <span class="support">{{user_stats.count_of_posts_likes}}</span>
+                            <div v-if="isDisabled('count_of_posts_likes')" class="welcome-button" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color: #353436; border-style: solid; border-width: thin; border-color: #30a25da6; color: #30a25da6;">Очистить</div>
+                          <div v-else class="welcome-button bgimg" style="margin-top: 7px; font-size: 14px; padding: 3px; background-color:#30a25da6; cursor: pointer;" v-on:click="clearData('likes_post')">Очистить</div>
+                  </li>
+                  <li>
+                    <a v-if="!wip" v-on:click="requestStatistic" style="cursor: pointer;" class="welcome-button js-download-button"> <span class="octicon octicon-move-down"></span>Обновить</a>
+                    <a v-else class="welcome-button js-download-button"> <span class="octicon octicon-move-down"></span>Обновить</a>
+                  </li>
+              </ul>
+            </header>
+
+                <!--Статус задачи-->
+                <div v-if='task_msg !== null' style="color: red; font-size: larger; margin-top: 10px;">{{ task_msg }}</div>
+
+              <div class="hero-features" >
+                <h1 v-if="user_is_login  && (user_stats == null)" class="hero-tagline">{{first_name}}, нажми <span class="hero-tagline-highlight">кнопку Узнать</span>, чтобы собрать <span class="hero-tagline-highlight">статистику</span> по количеству записей на стене, отметок "Мне нравится" и прочему в твоем VK</h1>
+                <h1 v-else-if="user_is_login && (user_stats !== null)" class="hero-tagline">Нажми <span class="hero-tagline-highlight">кнопку очистить</span>, чтобы удалить записи соответсвующего раздела в твоем VK</h1>
+              </div>
+              <div v-if="isUnreachable()" class="hero-features">
+                <h1 class="hero-tagline">Почему я вижу <span class="hero-tagline-highlight">надпись "Недоступно"</span>? Необходимо прочитать о токене.</h1>
+              </div>
+
+              <img v-if="user_is_login" style="height: 200px; width: 200px;" class="hero-octonaut" src="/static/logo.png" alt="Index octonaut" />
+              </div>
+            </section>
+
+
+          <section id="teletype" class="section section--realtime" style="background-image: url(/static/bg_token.svg); overflow: none;">
+            <div class="wrapper" v-if="user_is_login && user_stats !== null">
+
+                <h3>О токене</h3>
+
+                <p>Для доступа к данным пользователя VK выдает приложениям специальный токен, в целях безопасности, дающий разрешение только на некоторые операции с аккаунтом. В основном это публично доступные разделы.</p>
+
+                <div class="welcome-bgs">
+                  <img class="welcome-bg welcome-bg--screenshot" src="/static/picture.jpg" alt="instruction" />
+                </div>
+
+                <p>К сожалению, стандартных прав не хватит, чтобы собрать полную статистику отметок "Мне нравится" или удалить что-либо на стороне аккаунта. Если Вы доверяете приложению и хотите получить от него максимум - передайте ему расширенный токен.</p>
+                <p>Для своего успокоения, после работы с сервисом Вы можете сменить пароль от аккаунта и выданный токен станет неактуальным.</p>
+
+                <p class="welcome-cta">
+                  <a v-bind:href="root_app_href" target="_blank" class="welcome-button">Расширить права</a>
+                </p>
+
+                <div style="display: inline">
+
+                    <p >Вставить токен сюда</p>
+
+                    <div id="welcome">
+                        <input v-model="extended_token" type="text" id="name" placeholder="Токен...">
+                        <div style="padding: 10px;"></div>
+                        <div v-if="!wip" style="cursor: pointer;" class="welcome-button" v-on:click="sendToken">Отправить</div>
+                        <div v-else class="welcome-button" >Отправить</div>
+
+                        <div id="state" style="color: #3b9b6d; margin-top: 15px; font-size: 25px;">{{ extend_token_result }}</div>
+                    </div>
+                </div>
+            </div>
+              <div v-else class="wrapper" style="padding-top: none; padding-bottom: 300px; "></div>
+
+          </section>
+
+            </div>
+          </div>
+
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+<footer>
+  <div class="footer">
+    <div class="wrapper no-pad">
+      <ul class="footer-left">
+         <li><a href="https://vk.com/id10607730" target="_blank">Контакты</a></li>
+      </ul>
+
+      <div class="footer-right">
+        <a>with <span class="octicon octicon-heart"></span> by <span style="font-weight: 900;"> R</span></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</html>

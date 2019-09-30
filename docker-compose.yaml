@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    networks:
+      - db_network
+
+  web:
+    build: backend/.
+    command: sh -c "python3 manage.py makemigrations stats && python3 manage.py migrate stats && python3 manage.py runserver 0.0.0.0:8000"
+    networks:
+      - nginx_network
+      - db_network
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:1.13
+    ports:
+      - 8005:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend:/frontend
+      - ./backend/stats/static:/staticfiles
+    depends_on:
+      - web
+    networks:
+      - nginx_network
+
+networks:
+  nginx_network:
+    driver: bridge
+  db_network:
+    driver: bridge
